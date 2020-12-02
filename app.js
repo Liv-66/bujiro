@@ -17,6 +17,7 @@ const app = express();
 app.engine('hbs', handlebars({ defaultLayout: 'main.hbs' }));
 app.set('view engine', 'hbs');
 
+app.use(express.json({ limit: '10kb' }));
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(routes);
