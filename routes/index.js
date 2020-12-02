@@ -5,6 +5,7 @@ const router = express.Router();
 
 router.get('/', recordController.getRecords);
 router.delete('/:id', recordController.deleteRecord);
+router.patch('/:id', recordController.updateRecord);
 router.post('/create', recordController.createRecord);
 
 module.exports = router;

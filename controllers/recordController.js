@@ -25,3 +25,10 @@ exports.deleteRecord = async (req, res, next) => {
   await Record.destroy({ where: { id: req.params.id } });
   next();
 };
+
+exports.updateRecord = async (req, res, next) => {
+  const record = await Record.findByPk(req.params.id);
+  const { name, category, date, amount, merchant } = req.body;
+  await record.update({ name, category, date, amount, merchant });
+  next();
+};
