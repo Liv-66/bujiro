@@ -1,1 +1,69 @@
-<h2>hello</h2>
+<div class="card mb-3">
+    <div class="card-body">
+        <h5 class="card-title">支出總額</h5>
+        <h6 class="card-subtitle text-muted">$2000000</h6>
+    </div>
+
+
+    <form class="form-group" action="/create" method="POST">
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <input type="text" class="form-control" placeholder="支出名稱" name="name" required autofocus>
+            </div>
+            <div class="form-group">
+                <select class="form-control" name="category">
+                    <option>家居物業</option>
+                    <option>交通出行</option>
+                    <option>休閒娛樂</option>
+                    <option>餐飲食品</option>
+                    <option>其他</option>
+                </select>
+            </div>
+        </div>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <input type="date" class="form-control" name="date" required autofocus>
+            </div>
+            <div class="input-group-prepend">
+                <input type="text" class="form-control" name="merchant" placeholder="店家" autofocus>
+            </div>
+            <div class="input-group-prepend">
+                <span class="input-group-text">$</span>
+            </div>
+            <div class="input-group-prepend">
+                <input type="text" class="form-control" placeholder="金額" name="amount" required autofocus>
+            </div>
+            <div class="input-group-append">
+                <button type="submit" class="btn btn-primary">輸入</button>
+            </div>
+        </div>
+    </form>
+
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">name</th>
+                <th scope="col">類別</th>
+                <th scope="col">金額</th>
+                <th scope="col">日期</th>
+                <th scope="col">編輯</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each records}}
+            <tr class="table-light">
+                <th scope="row">{{this.name}}</th>
+                <td>{{this.category}}</td>
+                <td>{{this.amount}}</td>
+                <td>{{this.date}}</td>
+                <td>
+                    <a class="btn btn-success" href="/update/{{ this.id }}">edit</a>
+                    <form action="/{{ this.id }}?_method=DELETE" method="POST" style="display: inline">
+                        <button class="btn btn-danger" type="submit">delete</button>
+                    </form>
+                </td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</div>

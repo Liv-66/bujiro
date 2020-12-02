@@ -11,14 +11,13 @@ exports.createRecord = async (req, res, next) => {
   next();
 };
 
-exports.getRecords = async (req, res, next) => {
+exports.getRecords = async (req, res) => {
   try {
     const records = await Record.findAll({ raw: true });
-    res.json(records);
+    res.render('homepage', { records });
   } catch (err) {
     console.log(err);
   }
-  next();
 };
 
 exports.deleteRecord = async (req, res, next) => {
