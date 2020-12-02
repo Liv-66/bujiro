@@ -4,6 +4,7 @@ const recordController = require('../controllers/recordController');
 const router = express.Router();
 
 router.get('/', recordController.getRecords);
+router.delete('/:id', recordController.deleteRecord);
 router.post('/create', recordController.createRecord);
 
 module.exports = router;

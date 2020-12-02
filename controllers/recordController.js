@@ -20,3 +20,8 @@ exports.getRecords = async (req, res, next) => {
   }
   next();
 };
+
+exports.deleteRecord = async (req, res, next) => {
+  await Record.destroy({ where: { id: req.params.id } });
+  next();
+};
