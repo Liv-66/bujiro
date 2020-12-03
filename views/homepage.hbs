@@ -1,5 +1,35 @@
 <div class="card mb-3">
     <div class="card-body">
+        <form class="form-inline" style="float:right" action="/filter" method="POST">
+            <div class="form-group">
+                <select class="form-control" name="category">
+                    <optgroup label="類別選項">
+                        <option>家居物業</option>
+                        <option>交通出行</option>
+                        <option>休閒娛樂</option>
+                        <option>餐飲食品</option>
+                        <option>其他</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <select class="form-control" name="month">
+                    <optgroup label="月份">
+                        <option value="1">1月</option>
+                        <option value="2">2月</option>
+                        <option value="3">3月</option>
+                        <option value="4">4月</option>
+                        <option value="5">5月</option>
+                        <option value="6">6月</option>
+                        <option value="7">7月</option>
+                        <option value="8">8月</option>
+                        <option value="9">9月</option>
+                        <option value="10">10月</option>
+                        <option value="11">11月</option>
+                        <option value="12">12月</option>
+                </select>
+            </div>
+            <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+        </form>
         <h5 class="card-title">全部支出</h5>
         <h6 class="card-subtitle text-muted">總額 ${{total}}</h6>
     </div>
@@ -33,12 +63,11 @@
                 <input type="text" class="form-control" placeholder="金額" name="amount" required autofocus>
             </div>
             <div class="input-group-append">
-                <button type="submit" class="btn btn-primary">輸入</button>
+                <button type="submit" class="btn btn-primary">新增</button>
             </div>
         </div>
         {{>message}}
     </form>
-
     <table class="table table-hover">
         <thead>
             <tr>
