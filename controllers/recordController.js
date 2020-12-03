@@ -14,7 +14,11 @@ exports.createRecord = async (req, res, next) => {
 exports.getRecords = async (req, res) => {
   try {
     const records = await Record.findAll({ raw: true });
-    res.render('homepage', { records });
+    let total = 0;
+    records.forEach((el) => {
+      total = total + parseFloat(el.amount);
+    });
+    res.render('homepage', { records, total });
   } catch (err) {
     console.log(err);
   }
@@ -31,3 +35,4 @@ exports.updateRecord = async (req, res, next) => {
   await record.update({ name, category, date, amount, merchant });
   next();
 };
+
