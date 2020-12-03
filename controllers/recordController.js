@@ -1,3 +1,4 @@
+const moment = require('moment');
 const db = require('../models');
 const Record = db.Record;
 
@@ -17,6 +18,8 @@ exports.getRecords = async (req, res) => {
     let total = 0;
     records.forEach((el) => {
       total = total + parseFloat(el.amount);
+      const formatDate = moment(el.date, 'YYYY-MM-DD').format('YYYY-MM-DD');
+      el.date = formatDate;
     });
     res.render('homepage', { records, total });
   } catch (err) {
@@ -35,4 +38,3 @@ exports.updateRecord = async (req, res, next) => {
   await record.update({ name, category, date, amount, merchant });
   next();
 };
-
