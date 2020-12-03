@@ -7,7 +7,7 @@ exports.createRecord = async (req, res, next) => {
     const { name, category, date, amount, merchant } = req.body;
     await Record.create({ name, category, date, amount, merchant });
     req.flash('success_msg', '新增成功！');
-    res.redirect('/');
+    res.redirect('back');
   } catch (err) {
     console.log(err);
   }
@@ -45,16 +45,20 @@ exports.getRecordsByCategory = async (req, res) => {
   }
 };
 
-exports.deleteRecord = async (req, res, next) => {
+exports.deleteRecord = async (req, res) => {
   await Record.destroy({ where: { id: req.params.id } });
   req.flash('success_msg', '刪除成功。');
-  res.redirect('/');
-  next();
+  res.redirect('back');
+};
+
+exports.getUpdateRecord = async (req, res) => {
+  const record = await Record.findByPk(req.params.id);
+  const formatDate = moment(record.date, 'YYYY-MM-DD').format('YYYY-MM-DD');
+  res.render('update', { record: record.toJSON(), formatDate });
 };
 
 exports.updateRecord = async (req, res, next) => {
   const record = await Record.findByPk(req.params.id);
-  const { name, category, date, amount, merchant } = req.body;
-  await record.update({ name, category, date, amount, merchant });
-  next();
+  await record.update(req.body);
+  res.redirect('/');
 };

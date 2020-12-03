@@ -4,6 +4,41 @@
         <h6 class="card-subtitle text-muted">總額 ${{total}}</h6>
     </div>
 
+    <form style="margin: 1.5em" class="form-group" action="/create" method="POST">
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <input type="text" class="form-control" placeholder="支出名稱" name="name" required autofocus>
+            </div>
+            <div class="form-group">
+                <select class="form-control" name="category">
+                    <option>家居物業</option>
+                    <option>交通出行</option>
+                    <option>休閒娛樂</option>
+                    <option>餐飲食品</option>
+                    <option>其他</option>
+                </select>
+            </div>
+        </div>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <input type="date" class="form-control" name="date" required autofocus>
+            </div>
+            <div class="input-group-prepend">
+                <input type="text" class="form-control" name="merchant" placeholder="店家" autofocus>
+            </div>
+            <div class="input-group-prepend">
+                <span class="input-group-text">$</span>
+            </div>
+            <div class="input-group-prepend">
+                <input type="text" class="form-control" placeholder="金額" name="amount" required autofocus>
+            </div>
+            <div class="input-group-append">
+                <button type="submit" class="btn btn-primary">輸入</button>
+            </div>
+        </div>
+        {{>message}}
+    </form>
+
     <table class="table table-hover">
         <thead>
             <tr>
