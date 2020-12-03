@@ -29,9 +29,25 @@ exports.getRecords = async (req, res) => {
   }
 };
 
+exports.getRecordsByCategory = async (req, res) => {
+  try {
+    const { category } = req.query;
+    const records = await Record.findAll({ raw: true, where: { category } });
+    let total = 0;
+    records.forEach((el) => {
+      total = total + parseFloat(el.amount);
+      const formatDate = moment(el.date, 'YYYY-MM-DD').format('YYYY-MM-DD');
+      el.date = formatDate;
+    });
+    res.render('category', { category, records, total });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 exports.deleteRecord = async (req, res, next) => {
   await Record.destroy({ where: { id: req.params.id } });
-  req.flash('success_msg', '刪除成功。')
+  req.flash('success_msg', '刪除成功。');
   res.redirect('/');
   next();
 };
