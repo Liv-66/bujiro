@@ -1,8 +1,9 @@
 const express = require('express');
-const handlebars = require('express-handlebars');
+const exphbs = require('express-handlebars');
 const session = require('express-session');
 const bodyParser = require('body-parser');
 const methodOverride = require('method-override');
+const flash = require('connect-flash');
 
 const routes = require('./routes');
 
@@ -14,12 +15,25 @@ if (process.env.NODE_ENV !== 'production') {
 
 const app = express();
 
-app.engine('hbs', handlebars({ defaultLayout: 'main.hbs' }));
+app.engine('hbs', exphbs({ defaultLayout: 'main', extname: '.hbs' }));
 app.set('view engine', 'hbs');
 
 app.use(express.json({ limit: '10kb' }));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
+app.use(
+  session({
+    secret: 'expense-tracher-session-secret',
+    resave: false,
+    saveUninitialized: true,
+  })
+);
+app.use(flash());
+app.use((req, res, next) => {
+  res.locals.success_msg = req.flash('success_msg');
+  res.locals.delete_msg = req.flash('delete_msg');
+  next();
+});
 
 app.use(routes);
 

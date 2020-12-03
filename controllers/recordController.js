@@ -6,6 +6,8 @@ exports.createRecord = async (req, res, next) => {
   try {
     const { name, category, date, amount, merchant } = req.body;
     await Record.create({ name, category, date, amount, merchant });
+    req.flash('success_msg', '新增成功！');
+    res.redirect('/');
   } catch (err) {
     console.log(err);
   }
@@ -29,6 +31,8 @@ exports.getRecords = async (req, res) => {
 
 exports.deleteRecord = async (req, res, next) => {
   await Record.destroy({ where: { id: req.params.id } });
+  req.flash('success_msg', '刪除成功。')
+  res.redirect('/');
   next();
 };
 

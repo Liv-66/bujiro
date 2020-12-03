@@ -37,13 +37,15 @@
                 <button type="submit" class="btn btn-primary">輸入</button>
             </div>
         </div>
+        {{>message}}
     </form>
 
     <table class="table table-hover">
         <thead>
             <tr>
-                <th scope="col">name</th>
+                <th scope="col">支出名稱</th>
                 <th scope="col">類別</th>
+                <th scope="col">店家</th>
                 <th scope="col">金額</th>
                 <th scope="col">日期</th>
                 <th scope="col">編輯</th>
@@ -54,6 +56,7 @@
             <tr class="table-light">
                 <th scope="row">{{this.name}}</th>
                 <td>{{this.category}}</td>
+                <td>{{this.merchant}}</td>
                 <td>{{this.amount}}</td>
                 <td>{{this.date}}</td>
                 <td>
