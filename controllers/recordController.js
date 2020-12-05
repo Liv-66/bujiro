@@ -31,17 +31,53 @@ exports.getRecords = async (req, res) => {
 
 exports.getFilterRecords = async (req, res) => {
   const { category, month } = req.body;
-  const records = await Record.findAll({
+  let total = 0;
+  let records = [];
+
+  if (month === 'all') {
+    if (category === 'all') return res.redirect('/');
+    const records = await Record.findAll({
+      raw: true,
+      where: { category },
+    });
+    records.forEach((el) => {
+      total = total + parseFloat(el.amount);
+      const formatDate = moment(el.date, 'YYYY-MM-DD').format('YYYY-MM-DD');
+      el.date = formatDate;
+    });
+    return res.render('category', { category, records, total });
+  }
+
+  if (category === 'all') {
+    const allRecords = await Record.findAll({
+      raw: true,
+    });
+    allRecords.forEach((el) => {
+      const getMonth = (el.date.getMonth() + 1).toString();
+      if (getMonth === month) records.push(el);
+    });
+    records.forEach((el) => {
+      total = total + parseFloat(el.amount);
+      const formatDate = moment(el.date, 'YYYY-MM-DD').format('YYYY-MM-DD');
+      el.date = formatDate;
+    });
+    return res.render('category', { category, records, total });
+  }
+
+  const allRecords = await Record.findAll({
     raw: true,
     where: { category },
   });
-  let total = 0;
+  allRecords.forEach((el) => {
+    const getMonth = (el.date.getMonth() + 1).toString();
+    if (getMonth === month) records.push(el);
+  });
   records.forEach((el) => {
     total = total + parseFloat(el.amount);
     const formatDate = moment(el.date, 'YYYY-MM-DD').format('YYYY-MM-DD');
     el.date = formatDate;
   });
-  res.render('category', { category, records, total });
+  return res.render('category', { category, records, total });
 };
 
 exports.deleteRecord = async (req, res) => {
