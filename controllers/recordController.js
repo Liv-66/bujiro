@@ -5,7 +5,8 @@ const Record = db.Record;
 exports.createRecord = async (req, res, next) => {
   try {
     const { name, category, date, amount, merchant } = req.body;
-    await Record.create({ name, category, date, amount, merchant });
+    const userId = req.user.id;
+    await Record.create({ name, category, date, amount, merchant, userId });
     req.flash('success_msg', '新增成功！');
     res.redirect('back');
   } catch (err) {
@@ -16,7 +17,10 @@ exports.createRecord = async (req, res, next) => {
 
 exports.getRecords = async (req, res) => {
   try {
-    const records = await Record.findAll({ raw: true });
+    const records = await Record.findAll({
+      raw: true,
+      where: { userId: req.user.id },
+    });
     let total = 0;
     records.forEach((el) => {
       total = total + parseFloat(el.amount);
@@ -38,7 +42,7 @@ exports.getFilterRecords = async (req, res) => {
     if (category === 'all') return res.redirect('/');
     const records = await Record.findAll({
       raw: true,
-      where: { category },
+      where: { category, userId: req.user.id },
     });
     records.forEach((el) => {
       total = total + parseFloat(el.amount);
@@ -51,6 +55,7 @@ exports.getFilterRecords = async (req, res) => {
   if (category === 'all') {
     const allRecords = await Record.findAll({
       raw: true,
+      userId: req.user.id,
     });
     allRecords.forEach((el) => {
       const getMonth = (el.date.getMonth() + 1).toString();
@@ -66,7 +71,7 @@ exports.getFilterRecords = async (req, res) => {
 
   const allRecords = await Record.findAll({
     raw: true,
-    where: { category },
+    where: { category, userId: req.user.id },
   });
   allRecords.forEach((el) => {
     const getMonth = (el.date.getMonth() + 1).toString();
@@ -81,7 +86,7 @@ exports.getFilterRecords = async (req, res) => {
 };
 
 exports.deleteRecord = async (req, res) => {
-  await Record.destroy({ where: { id: req.params.id } });
+  await Record.destroy({ where: { id: req.params.id, userId: req.user.id } });
   req.flash('success_msg', '刪除成功。');
   res.redirect('back');
 };
