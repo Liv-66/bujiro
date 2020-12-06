@@ -8,7 +8,7 @@ module.exports = {
       Array.from({ length: 10 }).map((d, i) => ({
         name: faker.commerce.productName(),
         amount: faker.commerce.price(),
-        // category: faker.commerce.department(),
+        category: '家居物業',
         merchant: faker.commerce.department(),
         date: faker.date.past(),
         createdAt: new Date(),
