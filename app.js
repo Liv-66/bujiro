@@ -6,6 +6,7 @@ const methodOverride = require('method-override');
 const flash = require('connect-flash');
 
 const routes = require('./routes');
+const passport = require('./config/passport');
 
 const PORT = 3000;
 
@@ -28,10 +29,18 @@ app.use(
     saveUninitialized: true,
   })
 );
+
 app.use(flash());
+
+app.use(passport.initialize());
+app.use(passport.session());
+
 app.use((req, res, next) => {
   res.locals.success_msg = req.flash('success_msg');
+  res.locals.warning_msg = req.flash('warning_msg');
   res.locals.delete_msg = req.flash('delete_msg');
+  res.locals.user = req.user;
+  res.locals.isAuthenticated = req.isAuthenticated();
   next();
 });
 
