@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html>
-
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>記帳本</title>
+    <title>Bujiro</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel='shortcut icon' type='image/png' href='/img/favicon.png'>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.2/flatly/bootstrap.min.css"
         integrity="sha384-qF/QmIAj5ZaYFAeQcrQ6bfVMAh4zZlrGwTPY7T/M+iTTLJqJBJjwwnsE5Y0mV7QK" crossorigin="anonymous">
     <script src="https://kit.fontawesome.com/6fa7c7632c.js" crossorigin="anonymous"></script>
@@ -13,15 +13,13 @@
 
 <body style="margin: 1em;">
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <a class="navbar-brand" href="/">哺jiro養成計劃</a>
         {{#if isAuthenticated}}
-        <a class="navbar-brand" href="/">{{user.name}}的記帳本</a>
         <a class="nav-link" href="/users/logout">登出</a>
         {{else}}
-        <a class="navbar-brand" href="/">記帳本</a>
         <a class="nav-link" href="/users/login">登入</a>
         {{/if}}
     </nav>
-
     {{{body}}}
 </body>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
